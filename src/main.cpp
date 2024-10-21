@@ -49,7 +49,13 @@ int main()
 			player.updatePosition(deltaTime);
 		window.clear();
 		if (menu.getIsDrawn())
+		{
+			window.draw(menu.getRect(0));
+			window.draw(menu.getText(0));
 			window.draw(menu.getRect(1));
+			window.draw(menu.getText(1));
+			window.draw(menu.getMenu());
+		}
 		window.draw(player.getSprite());
 		window.draw(ui.getText());
 		window.display();
