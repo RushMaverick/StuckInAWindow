@@ -4,20 +4,43 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-class MenuItem
+class Button
 {
+	enum state
+	{
+		normal,
+		hover,
+		clicked
+	};
+
 public:
-	MenuItem(const std::string name, const int index); // Create sprite texture and text to set inside it.
-	sf::RectangleShape getRect();
+	Button() = delete;
+	Button(const std::string text, const int index);
+	~Button();
+	void setText(const std::string text);
+	void setPosition(sf::Vector2f pos);
+	void setColorClicked(sf::Color colorClicked);
+	void setColorHover(sf::Color colorHover);
+	void setColorNormal(sf::Color colorNormal);
 	sf::Text getText();
-	void setPosition(sf::Vector2f menuPos);
-	~MenuItem();
+	sf::RectangleShape getRect();
 
 private:
-	sf::Text _name;
-	sf::Font _font;
-	sf::RectangleShape _rectangle;
 	int _index;
+	sf::Color _colorClicked;
+	sf::Color _colorHover;
+	sf::Color _colorNormal;
+	sf::Color _textColor;
+
+	sf::Vector2f _position;
+	sf::Vector2f _size;
+	unsigned int _fontSize;
+
+	sf::Text _text;
+	sf::Font _font;
+	sf::Uint32 _btnState;
+
+	sf::RectangleShape _btnItem;
 };
 
 class Menu
@@ -37,7 +60,7 @@ private:
 	sf::RectangleShape _outline;
 	void repositionMenuItems(sf::Vector2f mousePos);
 	sf::Vector2f _position;
-	MenuItem menuItems[2] = {MenuItem("First Option", 1), MenuItem("Second Option", 2)};
+	Button menuItems[2] = {Button("First Option", 1), Button("Second Option", 2)};
 };
 
 #endif

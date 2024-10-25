@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-float			lengthVector2(sf::Vector2f &vec);
-sf::Vector2f	normalizeVector2(sf::Vector2f &vec);
+float lengthVector2(sf::Vector2f &vec);
+sf::Vector2f normalizeVector2(sf::Vector2f &vec);
 
 #endif

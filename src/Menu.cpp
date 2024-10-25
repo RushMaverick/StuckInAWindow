@@ -1,39 +1,60 @@
 #include "../includes/Menu.hpp"
 #include <iostream>
 
-MenuItem::MenuItem(const std::string name, const int index) : _index(index)
+Button::Button(const std::string text, const int index) : _index(index)
 {
-	_name.setString(name);
+	_text.setString(text);
 	if (!_font.loadFromFile("fonts/Roboto-Medium.ttf"))
 	{
 		std::cerr << "Failed to load font!" << std::endl;
 	}
-	_name.setFont(_font);
-	_name.setFillColor(sf::Color::Green);
-	_name.setCharacterSize(12);
-	std::cout << "MenuItem " << _index << " has been created." << std::endl;
-	_rectangle.setSize(sf::Vector2f(70, 20));
+	std::cout << "Button " << _index << " been created." << std::endl;
+	_btnItem.setFillColor(sf::Color::White);
+	_btnItem.setOutlineColor(sf::Color::Black);
+	_btnItem.setOutlineThickness(1.0f);
+	_btnItem.setSize({90, 20});
+	_text.setFont(_font);
+	_text.setCharacterSize(12);
+	_text.setFillColor(sf::Color::Black);
 }
 
-sf::RectangleShape MenuItem::getRect()
+Button::~Button()
 {
-	return (_rectangle);
 }
 
-sf::Text MenuItem::getText()
+void Button::setText(const std::string text)
 {
-	return (_name);
+	_text.setString(text);
 }
 
-void MenuItem::setPosition(sf::Vector2f menuPos)
+void Button::setPosition(sf::Vector2f pos)
 {
-	_rectangle.setPosition(menuPos);
-	_name.setPosition(menuPos);
+	_btnItem.setPosition(pos);
+	_text.setPosition(pos);
+}
+void Button::setColorClicked(sf::Color colorClicked)
+{
+	_colorClicked = colorClicked;
 }
 
-MenuItem::~MenuItem()
+void Button::setColorHover(sf::Color colorHover)
 {
-	std::cout << "MenuItem " << _index << " has been destroyed." << std::endl;
+	_colorHover = colorHover;
+}
+
+void Button::setColorNormal(sf::Color colorNormal)
+{
+	_colorNormal = colorNormal;
+}
+
+sf::RectangleShape Button::getRect()
+{
+	return _btnItem;
+}
+
+sf::Text Button::getText()
+{
+	return _text;
 }
 
 Menu::Menu()
@@ -42,7 +63,7 @@ Menu::Menu()
 	_outline.setFillColor(sf::Color::Transparent);
 	_outline.setOutlineColor(sf::Color::White);
 	_outline.setOutlineThickness(2.0f);
-	_outline.setSize({75, 55});
+	_outline.setSize({105, 55});
 	std::cout << "Menu has been created." << std::endl;
 }
 
@@ -58,9 +79,8 @@ void Menu::repositionMenuItems(sf::Vector2f mousePos)
 void Menu::setPositionMenu(sf::Vector2f mousePos)
 {
 	_position = mousePos;
-	_outline.setPosition(_position);
-	repositionMenuItems(_position);
-	// menuItems[0].setPosition(_position);
+	_outline.setPosition({mousePos.x - 7.5f, mousePos.y - 5});
+	repositionMenuItems(mousePos);
 }
 
 void Menu::setIsDrawn(bool state)
