@@ -4,7 +4,7 @@
 Button::Button(const std::string text, const int index) : _index(index)
 {
 	_text.setString(text);
-	if (!_font.loadFromFile("fonts/Roboto-Medium.ttf"))
+	if (!_font.loadFromFile("../../includes/fonts/Roboto-Medium.ttf"))
 	{
 		std::cerr << "Failed to load font!" << std::endl;
 	}
@@ -13,6 +13,10 @@ Button::Button(const std::string text, const int index) : _index(index)
 	_btnItem.setOutlineColor(sf::Color::Black);
 	_btnItem.setOutlineThickness(1.0f);
 	_btnItem.setSize({90, 20});
+	sf::Rect rect = _btnItem.getLocalBounds();
+	_colorClicked = sf::Color::Red;
+	_colorHover = sf::Color::Blue;
+	_colorNormal = sf::Color::White;
 	_text.setFont(_font);
 	_text.setCharacterSize(12);
 	_text.setFillColor(sf::Color::Black);
@@ -35,16 +39,19 @@ void Button::setPosition(sf::Vector2f pos)
 void Button::setColorClicked(sf::Color colorClicked)
 {
 	_colorClicked = colorClicked;
+	_text.setFillColor(sf::Color::White);
 }
 
 void Button::setColorHover(sf::Color colorHover)
 {
 	_colorHover = colorHover;
+	_text.setFillColor(sf::Color::White);
 }
 
 void Button::setColorNormal(sf::Color colorNormal)
 {
 	_colorNormal = colorNormal;
+	_text.setFillColor(sf::Color::Black);
 }
 
 sf::RectangleShape Button::getRect()
