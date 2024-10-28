@@ -19,9 +19,7 @@ public:
 	~Button();
 	void setText(const std::string text);
 	void setPosition(sf::Vector2f pos);
-	void setColorClicked(sf::Color colorClicked);
-	void setColorHover(sf::Color colorHover);
-	void setColorNormal(sf::Color colorNormal);
+	void setState(int state);
 	sf::Text getText();
 	sf::RectangleShape getRect();
 
@@ -50,6 +48,7 @@ public:
 	sf::RectangleShape getRect(const int index);
 	sf::RectangleShape getMenu();
 	sf::Text getText(const int index);
+	Button &getButton(const int index);
 	bool getIsDrawn();
 	void setIsDrawn(bool state);
 	void setPositionMenu(sf::Vector2f mousePos);

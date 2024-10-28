@@ -45,6 +45,12 @@ int main()
 				};
 			}
 		}
+		if (menu.getButton(0).getRect().getGlobalBounds().contains(sf::Vector2f{sf::Mouse::getPosition(window)}))
+		{
+			menu.getButton(0).setState(1);
+		}
+		else
+			menu.getButton(0).setState(0);
 		if (player.getIsMoving())
 			player.updatePosition(deltaTime);
 		window.clear();

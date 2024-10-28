@@ -13,7 +13,7 @@ Button::Button(const std::string text, const int index) : _index(index)
 	_btnItem.setOutlineColor(sf::Color::Black);
 	_btnItem.setOutlineThickness(1.0f);
 	_btnItem.setSize({90, 20});
-	sf::Rect rect = _btnItem.getLocalBounds();
+	sf::Rect rect = _btnItem.getGlobalBounds();
 	_colorClicked = sf::Color::Red;
 	_colorHover = sf::Color::Blue;
 	_colorNormal = sf::Color::White;
@@ -36,22 +36,24 @@ void Button::setPosition(sf::Vector2f pos)
 	_btnItem.setPosition(pos);
 	_text.setPosition(pos);
 }
-void Button::setColorClicked(sf::Color colorClicked)
-{
-	_colorClicked = colorClicked;
-	_text.setFillColor(sf::Color::White);
-}
 
-void Button::setColorHover(sf::Color colorHover)
+void Button::setState(int state)
 {
-	_colorHover = colorHover;
-	_text.setFillColor(sf::Color::White);
-}
-
-void Button::setColorNormal(sf::Color colorNormal)
-{
-	_colorNormal = colorNormal;
-	_text.setFillColor(sf::Color::Black);
+	switch (state)
+	{
+	case 0:
+		_btnItem.setFillColor(_colorNormal);
+		break;
+	case 1:
+		_btnItem.setFillColor(_colorHover);
+		std::cout << "Color CHANGE" << std::endl;
+		break;
+	case 2:
+		_btnItem.setFillColor(_colorClicked);
+		break;
+	default:
+		break;
+	}
 }
 
 sf::RectangleShape Button::getRect()
@@ -103,6 +105,11 @@ bool Menu::getIsDrawn()
 sf::RectangleShape Menu::getMenu()
 {
 	return _outline;
+}
+
+Button &Menu::getButton(const int index)
+{
+	return (menuItems[index]);
 }
 
 sf::RectangleShape Menu::getRect(const int index)
