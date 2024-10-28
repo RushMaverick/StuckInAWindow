@@ -1,70 +1,6 @@
 #include "../includes/Menu.hpp"
+#include "../includes/Button.hpp"
 #include <iostream>
-
-Button::Button(const std::string text, const int index) : _index(index)
-{
-	_text.setString(text);
-	if (!_font.loadFromFile("../../includes/fonts/Roboto-Medium.ttf"))
-	{
-		std::cerr << "Failed to load font!" << std::endl;
-	}
-	std::cout << "Button " << _index << " been created." << std::endl;
-	_btnItem.setFillColor(sf::Color::White);
-	_btnItem.setOutlineColor(sf::Color::Black);
-	_btnItem.setOutlineThickness(1.0f);
-	_btnItem.setSize({90, 20});
-	sf::Rect rect = _btnItem.getGlobalBounds();
-	_colorClicked = sf::Color::Red;
-	_colorHover = sf::Color::Blue;
-	_colorNormal = sf::Color::White;
-	_text.setFont(_font);
-	_text.setCharacterSize(12);
-	_text.setFillColor(sf::Color::Black);
-}
-
-Button::~Button()
-{
-}
-
-void Button::setText(const std::string text)
-{
-	_text.setString(text);
-}
-
-void Button::setPosition(sf::Vector2f pos)
-{
-	_btnItem.setPosition(pos);
-	_text.setPosition(pos);
-}
-
-void Button::setState(int state)
-{
-	switch (state)
-	{
-	case 0:
-		_btnItem.setFillColor(_colorNormal);
-		break;
-	case 1:
-		_btnItem.setFillColor(_colorHover);
-		std::cout << "Color CHANGE" << std::endl;
-		break;
-	case 2:
-		_btnItem.setFillColor(_colorClicked);
-		break;
-	default:
-		break;
-	}
-}
-
-sf::RectangleShape Button::getRect()
-{
-	return _btnItem;
-}
-
-sf::Text Button::getText()
-{
-	return _text;
-}
 
 Menu::Menu()
 {
@@ -97,14 +33,27 @@ void Menu::setIsDrawn(bool state)
 	_isDrawn = state;
 }
 
-bool Menu::getIsDrawn()
+bool Menu::getIsDrawn() const
 {
 	return _isDrawn;
 }
 
-sf::RectangleShape Menu::getMenu()
+sf::RectangleShape Menu::getMenu() const
 {
 	return _outline;
+}
+
+void Menu::checkButtonState(sf::Vector2f mousePos)
+{
+	for (int i = 0; i < 2; i++)
+	{
+		if (menuItems[i].getRect().getGlobalBounds().contains(mousePos))
+		{
+			menuItems[i].setState(1);
+		}
+		else
+			menuItems[i].setState(0);
+	}
 }
 
 Button &Menu::getButton(const int index)
@@ -112,12 +61,12 @@ Button &Menu::getButton(const int index)
 	return (menuItems[index]);
 }
 
-sf::RectangleShape Menu::getRect(const int index)
+sf::RectangleShape Menu::getRect(const int index) const
 {
 	return (menuItems[index].getRect());
 }
 
-sf::Text Menu::getText(const int index)
+sf::Text Menu::getText(const int index) const
 {
 	return (menuItems[index].getText());
 }

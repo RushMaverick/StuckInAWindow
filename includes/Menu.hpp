@@ -3,55 +3,21 @@
 
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "Button.hpp"
 
-class Button
-{
-	enum state
-	{
-		normal,
-		hover,
-		clicked
-	};
-
-public:
-	Button() = delete;
-	Button(const std::string text, const int index);
-	~Button();
-	void setText(const std::string text);
-	void setPosition(sf::Vector2f pos);
-	void setState(int state);
-	sf::Text getText();
-	sf::RectangleShape getRect();
-
-private:
-	int _index;
-	sf::Color _colorClicked;
-	sf::Color _colorHover;
-	sf::Color _colorNormal;
-	sf::Color _textColor;
-
-	sf::Vector2f _position;
-	sf::Vector2f _size;
-	unsigned int _fontSize;
-
-	sf::Text _text;
-	sf::Font _font;
-	sf::Uint32 _btnState;
-
-	sf::RectangleShape _btnItem;
-};
-
+class Button;
 class Menu
 {
 public:
 	Menu();
-	sf::RectangleShape getRect(const int index);
-	sf::RectangleShape getMenu();
-	sf::Text getText(const int index);
+	sf::RectangleShape getRect(const int index) const;
+	sf::RectangleShape getMenu() const;
+	sf::Text getText(const int index) const;
 	Button &getButton(const int index);
-	bool getIsDrawn();
+	bool getIsDrawn() const;
 	void setIsDrawn(bool state);
 	void setPositionMenu(sf::Vector2f mousePos);
+	void checkButtonState(sf::Vector2f mousePos);
 	~Menu();
 
 private:
@@ -59,7 +25,7 @@ private:
 	sf::RectangleShape _outline;
 	void repositionMenuItems(sf::Vector2f mousePos);
 	sf::Vector2f _position;
-	Button menuItems[2] = {Button("First Option", 1), Button("Second Option", 2)};
+	Button menuItems[3] = {Button("First Option", 1), Button("Second Option", 2), Button("Third Option", 3)};
 };
 
 #endif

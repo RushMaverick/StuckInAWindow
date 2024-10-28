@@ -30,6 +30,7 @@ int main()
 				{
 				case sf::Mouse::Left:
 				{
+
 					auto position = sf::Vector2f{static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)};
 					player.setTarget(position);
 					menu.setIsDrawn(false);
@@ -45,12 +46,7 @@ int main()
 				};
 			}
 		}
-		if (menu.getButton(0).getRect().getGlobalBounds().contains(sf::Vector2f{sf::Mouse::getPosition(window)}))
-		{
-			menu.getButton(0).setState(1);
-		}
-		else
-			menu.getButton(0).setState(0);
+		menu.checkButtonState(sf::Vector2f{static_cast<float>(sf::Mouse::getPosition(window).x), static_cast<float>(sf::Mouse::getPosition(window).y)});
 		if (player.getIsMoving())
 			player.updatePosition(deltaTime);
 		window.clear();
